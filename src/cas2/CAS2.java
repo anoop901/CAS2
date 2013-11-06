@@ -4,6 +4,9 @@
  */
 package cas2;
 
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 /**
  *
  * @author anoop
@@ -14,6 +17,19 @@ public class CAS2 {
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
-		// TODO code application logic here
+		
+		Scanner scnr = new Scanner(System.in);
+		
+		while (true) {
+			System.out.print("Type an expression: ");
+			try {
+				AlgebraNode rootNode = AlgebraNode.parsePrefix(scnr.nextLine());
+				System.out.println(rootNode);
+				System.out.println(rootNode.differentiate(new VariableNode("x")));
+			} catch (NoSuchElementException nsee) {
+				System.out.println("Invalid prefix notation");
+			}
+			System.out.println();
+		}
 	}
 }

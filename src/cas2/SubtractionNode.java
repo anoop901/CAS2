@@ -22,6 +22,19 @@ public class SubtractionNode extends AlgebraNode {
 	public AlgebraNode differentiate(VariableNode variable) {
 		return new SubtractionNode(minuend.differentiate(variable), subtrahend.differentiate(variable));
 	}
+	
+	public AlgebraNode simplify() {
+		// simplify minuend & subtrahend
+		AlgebraNode simpleLeft = minuend.simplify();
+		AlgebraNode simpleRight = subtrahend.simplify();
+		
+		// if subtrahend is 0, return minuend
+		if (simpleRight instanceof ConstantNode && ((ConstantNode) simpleRight).getValue() == 0) {
+			return simpleLeft;
+		}
+		
+		return new SubtractionNode(simpleLeft, simpleRight);
+	}
 
 	@Override
 	public String toInfix() {

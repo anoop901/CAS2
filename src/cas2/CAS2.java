@@ -21,11 +21,14 @@ public class CAS2 {
 		Scanner scnr = new Scanner(System.in);
 		
 		while (true) {
-			System.out.print("Type an expression: ");
+			System.out.print("Type an infix expression: ");
 			try {
 				AlgebraNode rootNode = AlgebraNode.parsePrefix(scnr.nextLine());
+				AlgebraNode derivative = rootNode.differentiate(new VariableNode("x"));
+				AlgebraNode simpDerivative = derivative.simplify();
 				System.out.println(rootNode);
-				System.out.println(rootNode.differentiate(new VariableNode("x")));
+				System.out.println(derivative);
+				System.out.println(simpDerivative);
 			} catch (NoSuchElementException nsee) {
 				System.out.println("Invalid prefix notation");
 			}

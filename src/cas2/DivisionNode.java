@@ -27,6 +27,25 @@ public class DivisionNode extends AlgebraNode {
 					new MultiplicationNode(divisor.differentiate(variable), dividend)),
 				new PowerNode(divisor, new ConstantNode(2)));
 	}
+	
+	@Override
+	public AlgebraNode simplify() {
+		AlgebraNode simpleLeft = dividend.simplify();
+		AlgebraNode simpleRight = divisor.simplify();
+		
+		// if numerator is 0 and denominator is not 0, return 0
+		if ((simpleLeft instanceof ConstantNode && ((ConstantNode) simpleLeft).getValue() == 0)
+				&& !(simpleRight instanceof ConstantNode && ((ConstantNode) simpleRight).getValue() == 0)) {
+			return new ConstantNode(0);
+		}
+		
+		// if denominator is 1, return numerator
+		if (simpleRight instanceof ConstantNode && ((ConstantNode) simpleRight).getValue() == 1) {
+			return simpleLeft;
+		}
+		
+		return new DivisionNode(simpleLeft, simpleRight);
+	}
 
 	@Override
 	public String toInfix() {

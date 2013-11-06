@@ -49,17 +49,20 @@ public class MultiplicationNode extends AlgebraNode {
 		AlgebraNode simpleLeft = leftFactor.simplify();
 		AlgebraNode simpleRight = rightFactor.simplify();
 		
+		// if either factor is 0, return 0
 		if (simpleLeft instanceof ConstantNode && ((ConstantNode) simpleLeft).getValue() == 0
 				|| simpleRight instanceof ConstantNode && ((ConstantNode) simpleRight).getValue() == 0) {
 			return new ConstantNode(0);
 		}
 		
+		// if either factor is 1, return the other
 		if (simpleLeft instanceof ConstantNode && ((ConstantNode) simpleLeft).getValue() == 1) {
 			return simpleRight;
 		}
 		if (simpleRight instanceof ConstantNode && ((ConstantNode) simpleRight).getValue() == 1) {
 			return simpleLeft;
 		}
-		return new AdditionNode(simpleLeft, simpleRight);
+		
+		return new MultiplicationNode(simpleLeft, simpleRight);
 	}
 }

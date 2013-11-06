@@ -39,6 +39,11 @@ public abstract class AlgebraNode {
 				return new DivisionNode(parsePrefix(scnr), parsePrefix(scnr));
 			} else if (token.equals("^")) {
 				return new PowerNode(parsePrefix(scnr), parsePrefix(scnr));
+			}
+			
+			Function f;
+			if ((f = Function.findFunctionWithName(token)) != null) {
+				return new FunctionNode(f, parsePrefix(scnr));
 			} else {
 				return new VariableNode(token);
 			}
